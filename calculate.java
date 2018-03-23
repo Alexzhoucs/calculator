@@ -10,8 +10,6 @@ public class calculate {
 	
 	private static String paren = "()";
 	
-	private static int LpNum = 0;
-	
 	private static String buffer = "";
 	
 	private static char lastChar = ' ';
@@ -41,11 +39,7 @@ public class calculate {
 			return 1;
 		  }
 		else if(operator.indexOf(c) != -1 && operator.indexOf(lastChar) == -1)
-		  {
-			if(buffer == "" && c != '-')
-				buffer += 0;
-			buffer += c;
-		  }
+		  buffer += c;
 		else if(operator.indexOf(c) != -1)
 		{
 		  buffer = buffer.substring(0,buffer.length() - 1);
@@ -73,10 +67,7 @@ public class calculate {
 	
 	public static void error(int i)
 	{
-		if(i == 1)
-		 System.out.println(" error1:missing \")\"\n ");
-		if(i == 2)
-		 System.out.println(" error1:missing \"(\"\n ");
+		System.out.println("error");
 	}
 	
 	public static void expression() throws IOException
@@ -113,15 +104,9 @@ public class calculate {
         	   num = 0;
            }
            if(ch == ')')
-           {
-        	   if(LpNum > 0)
-        	     break;
-        	   else
-        		 error(2);
-           }
+        	   break;
            if(ch == '(')
            {
-        	   LpNum += 1;
         	   expression();
         	   if(ch != ')')
         		   error(1);
@@ -143,38 +128,6 @@ public class calculate {
         		  stack[top-1] -= stack[top]; 
         		  top -= 1;
         	  }
-        	  else
-        		  stack[top] = -stack[top];
-           }
-           if(ch == '*')
-           {
-        	   factor();
-        	   stack[top-1] *= stack[top]; 
-        	   top -= 1;
-           }
-           if(ch == '/')
-           {
-        	   factor();
-        	   stack[top-1] /= stack[top]; 
-        	   top -= 1;
-           }
-           if(ch == '&')
-           {
-        	   factor();
-        	   stack[top-1] &= stack[top]; 
-        	   top -= 1;
-           }
-           if(ch == '|')
-           {
-        	   factor();
-        	   stack[top-1] |= stack[top]; 
-        	   top -= 1;
-           }
-           if(ch == '^')
-           {
-        	   factor();
-        	   stack[top-1] ^= stack[top]; 
-        	   top -= 1;
            }
 	   }
 	}
@@ -183,6 +136,7 @@ public class calculate {
 	{
 	   int statement = 0;
 	   int num = 0 , l = buffer.length();
+	   char ch;
 	   while(s < l)
 	   {
            ch = buffer.charAt(s);
@@ -212,99 +166,20 @@ public class calculate {
         	   stack[top] = num;
         	   num = 0;
            }
+           if(ch == ')')
+        	   break;
            if(ch == '(')
            {
-        	   LpNum += 1;
         	   expression();
         	   if(ch != ')')
         		   error(1);
         	   else
         		   break;
            }
-           if(ch == '+' || ch == '-' || ch == ')')
+           if(ch == '+' || ch == '-')
            {
         	   s -= 1;
          	  break;
-           }
-           if(ch == '*')
-           {
-        	   factor();
-        	   stack[top-1] *= stack[top]; 
-        	   top -= 1;
-           }
-           if(ch == '/')
-           {
-        	   factor();
-        	   stack[top-1] /= stack[top]; 
-        	   top -= 1;
-           }
-           if(ch == '&')
-           {
-        	   factor();
-        	   stack[top-1] &= stack[top]; 
-        	   top -= 1;
-           }
-           if(ch == '|')
-           {
-        	   factor();
-        	   stack[top-1] |= stack[top]; 
-        	   top -= 1;
-           }
-           if(ch == '^')
-           {
-        	   factor();
-        	   stack[top-1] ^= stack[top]; 
-        	   top -= 1;
-           }
-	   }
-	}
-	
-	public static void factor() throws IOException
-	{
-	   int statement = 0;
-	   int num = 0 , l = buffer.length();
-	   while(s < l)
-	   {
-           ch = buffer.charAt(s);
-           s += 1;
-           while(dictionary.indexOf(ch) != -1)
-           {
-        	   statement = 1;
-        	   num *= d;
-        	   if("abcdef".indexOf(ch) != -1)
-        		   num += (int)ch - 'a' + 10;
-        	   else if("ABCDEF".indexOf(ch) != -1)
-        		   num += (int)ch - 'A' + 10;
-        	   else
-        		   num += (int)ch - '0';
-        	   if(s < l)
-        	   {
-        		   ch = buffer.charAt(s);
-        		   s += 1;
-        	   }
-        	   else
-        		   ch = ' ';
-           }
-           if(statement == 1)
-           {
-        	   statement = 0;
-        	   top += 1;
-        	   stack[top] = num;
-        	   num = 0;
-           }
-           if(ch == '(')
-           {
-        	   LpNum += 1;
-        	   expression();
-        	   if(ch != ')')
-        		   error(1);
-        	   else
-        		   break;
-           }
-           if((operator.indexOf(ch) != -1 && ch != '~') || ch == ')')
-           {
-        	   s -= 1;
-        	   break;
            }
 	   }
 	}
