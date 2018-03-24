@@ -34,3 +34,6 @@
 # Documents
 *.doc
 *.docx
+
+# Classes
+*.class

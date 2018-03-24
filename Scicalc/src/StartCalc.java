@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public class StartCalc {
-    public static void main(String[] C){
+    public static void main(String[] args){
         Calculator calculator = new Calculator(400, 550);
         calculator.setTitle("Calculator");
         calculator.getContentPane().setBackground(Helper.darkGrey);
