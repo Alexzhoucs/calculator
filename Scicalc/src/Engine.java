@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Date;
 
 class Engine {
     String computeSciFun(String funcName, String input) {
