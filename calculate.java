@@ -1,9 +1,12 @@
 package programmer_calculator;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 
 import javax.swing.ButtonGroup;
@@ -21,7 +24,11 @@ public class calculate extends JFrame {
 	 * 定义计算器界面
 	 * 
 	 */
-	static JTextField resultline = new JTextField("0",40);
+	static JTextField resultline = new JTextField("0",2);
+	static JTextField lastline = new JTextField("",2);
+	static JTextField t1 = new JTextField("",2);
+	static JTextField t2 = new JTextField("",2);
+	static JTextField t3 = new JTextField("",2);
 	static JButton data0 = new JButton("0");
 	static JButton data1 = new JButton("1");
 	static JButton data2 = new JButton("2");
@@ -43,6 +50,8 @@ public class calculate extends JFrame {
     static JButton xor = new JButton("xor");
     static JButton not = new JButton("not");
     static JButton bs = new JButton("backspace");
+    static JButton cl = new JButton("C");
+    static JButton mod = new JButton("mod");
     
     JRadioButton jrb1;
     JRadioButton jrb2;
@@ -66,15 +75,31 @@ public class calculate extends JFrame {
     	bg.add(jrb3);
     	bg.add(jrb4);
 
-    	jp.setLayout(new GridLayout(5,5,5,5));
+    	jp.setLayout(new GridLayout(6,5,5,5));
     	resultline.setHorizontalAlignment(JTextField.RIGHT);
     	setLayout(new GridLayout(2,1));
+
+    	lastline.setHorizontalAlignment(JTextField.RIGHT);
+    	JPanel top = new JPanel();
+        top.setLayout(new BorderLayout());
+        top.add("North", lastline);
+        top.add("Center", resultline);
+        top.setLayout(new GridLayout(2,5));
+        
+        t1.setHorizontalAlignment(JTextField.LEFT);
+        t2.setHorizontalAlignment(JTextField.LEFT);
+        t3.setHorizontalAlignment(JTextField.LEFT);
+        jp.add(t1);
+        jp.add(t2);
+        jp.add(t3);
+        jp.add(bs);
+        jp.add(cl);
     	
     	jp.add(jrb1);
     	jp.add(jrb2);
     	jp.add(jrb3);
     	jp.add(jrb4);
-    	jp.add(bs);
+    	jp.add(mod);
     	jp.add(data7);
         jp.add(data8);
         jp.add(data9);
@@ -95,13 +120,94 @@ public class calculate extends JFrame {
         jp.add(equ);
         jp.add(dvd);
         jp.add(not);
-        c.add(resultline);
+        c.add(top);
         c.add(jp);
         setSize(400,300);
         setTitle("计算器");
         setVisible(true);
         setResizable(false);//不能自由改变大小
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        jrb1.addItemListener(new ItemListener() {
+      	@Override
+        	public void itemStateChanged(ItemEvent e) {
+        	if (jrb1.isSelected()) {
+        		t1.setText("");
+        		t2.setText("");
+        		t3.setText("");
+        		String str = resultline.getText();
+        		if(str.matches(dictionary)) {
+        		int r = Integer.valueOf(str, d);
+        		resultline.setText(Integer.toBinaryString(r));
+        	}
+        	else
+        		resultline.setText("0");
+        	}
+            d = 2;
+            dictionary = "01";
+        	}
+        	});
+        
+        jrb2.addItemListener(new ItemListener() {
+      	@Override
+        	public void itemStateChanged(ItemEvent e) {
+        	if (jrb2.isSelected()) {
+        		t1.setText("");
+        		t2.setText("");
+        		t3.setText("");
+        		String str = resultline.getText();
+        		if(str.matches(dictionary)) {
+        		int r = Integer.valueOf(str, d);
+        		resultline.setText(Integer.toOctalString(r));
+        	}
+        	else
+        		resultline.setText("0");
+         	   d = 8;
+         	   dictionary = "01234567";
+        	}
+        	}
+        	});
+        
+        jrb3.addItemListener(new ItemListener() {
+      	@Override
+        	public void itemStateChanged(ItemEvent e) {
+        	if (jrb3.isSelected()) {
+        		t1.setText("");
+        		t2.setText("");
+        		t3.setText("");
+        		String str = resultline.getText();
+        		if(str.matches(dictionary)) {
+        		int r = Integer.valueOf(str, d);
+        		resultline.setText(Integer.toString(r));
+        	}
+        	else
+        		resultline.setText("0");
+        	}
+        	   d = 10;
+               dictionary = "0123456789";
+        	}
+        	});
+        
+        jrb4.addItemListener(new ItemListener() {
+      	@Override
+        	public void itemStateChanged(ItemEvent e) {
+        	if (jrb4.isSelected()) {
+        		t1.setText("");
+        		t2.setText("");
+        		t3.setText("");
+        		String str = resultline.getText();
+        		if(str.matches(dictionary))
+        		{
+        		  int r = Integer.valueOf(str, d);
+        		  resultline.setText(Integer.toHexString(r));
+        		}
+        		else
+        		 resultline.setText("0");
+        		   d = 16;
+                   dictionary = "0123456789abcdefABCDEF";
+        	}
+        	}
+        	});
         
         data0.addActionListener(new ActionListener(){//数字0的输入
             public void actionPerformed(ActionEvent arg0){
@@ -324,7 +430,37 @@ public class calculate extends JFrame {
             	s = 0;
             	expression();
             	resultline.setText("");
-            	resultline.setText(String.valueOf(stack[1]));
+            	lastline.setText(buffer);
+            	String str = null;
+            	if(d == 10)
+            	{
+              	  str = String.valueOf(stack[1]);
+              	  t1.setText("BIN=" + Integer.toBinaryString(stack[1]));
+              	  t2.setText("OCT=" + Integer.toOctalString(stack[1]));
+              	  t3.setText("HEX=" + Integer.toHexString(stack[1]));
+            	}
+            	else if(d == 2)
+            	{
+            		str = Integer.toBinaryString(stack[1]);
+                	  t1.setText("OCT=" + Integer.toOctalString(stack[1]));
+                  	  t2.setText("DEC=" + Integer.toString(stack[1]));
+                  	  t3.setText("HEX=" + Integer.toHexString(stack[1]));
+            	}
+            	else if(d == 16)
+            	{
+            		str = Integer.toHexString(stack[1]);
+            		t1.setText("BIN=" + Integer.toBinaryString(stack[1]));
+            		t2.setText("OCT=" + Integer.toOctalString(stack[1]));
+            		t3.setText("DEC=" + Integer.toString(stack[1]));
+            	}
+            	else if(d == 8)
+            	{
+            		str = Integer.toOctalString(stack[1]);
+            		t1.setText("BIN=" + Integer.toBinaryString(stack[1]));
+            		t2.setText("DEC=" + Integer.toString(stack[1]));
+                	t3.setText("HEX=" + Integer.toHexString(stack[1]));
+            	}
+            	resultline.setText(str);
             }
         });
         
@@ -338,6 +474,17 @@ public class calculate extends JFrame {
                     }
                     else
                     	resultline.setText("0");
+                }
+        });
+        
+        cl.addActionListener(new ActionListener(){//backspace
+            public void actionPerformed(ActionEvent arg0){
+                    	resultline.setText("0");
+                    	t1.setText("");
+                    	t2.setText("");
+                    	t3.setText("");
+                    	buffer = "";
+                    	lastline.setText("");
                 }
         });
     }
@@ -412,7 +559,7 @@ public class calculate extends JFrame {
 		else if(d == 8)
 			dictionary += "012345678";
 		else if(d == 16)
-			dictionary += "0123456789abcdABCD";
+			dictionary += "0123456789abcdefABCDEF";
 		String str = resultline.getText();
 		str += "=";
 		char c;
