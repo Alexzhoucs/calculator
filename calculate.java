@@ -1,6 +1,7 @@
 package programmer_calculator;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -29,6 +31,18 @@ public class calculate extends JFrame {
 	static JTextField t1 = new JTextField("",2);
 	static JTextField t2 = new JTextField("",2);
 	static JTextField t3 = new JTextField("",2);
+	
+	static JButton da = new JButton("a");
+	static JButton db = new JButton("b");
+	static JButton dc = new JButton("c");
+	static JButton dd = new JButton("d");
+	static JButton de = new JButton("e");
+	static JButton df = new JButton("f");
+	
+	static JButton sl = new JButton("lsh");
+	static JButton sr = new JButton("rsh");
+
+    
 	static JButton data0 = new JButton("0");
 	static JButton data1 = new JButton("1");
 	static JButton data2 = new JButton("2");
@@ -57,7 +71,11 @@ public class calculate extends JFrame {
     JRadioButton jrb2;
     JRadioButton jrb3;
     JRadioButton jrb4;
-	
+    JRadioButton jrb5;
+    JRadioButton jrb6;
+    JRadioButton jrb7;
+    JRadioButton jrb8;
+    
     static JPanel jp = new JPanel();
     
     Container c = getContentPane() ;
@@ -69,13 +87,24 @@ public class calculate extends JFrame {
     	jrb3 = new JRadioButton("十进制");
     	jrb4 = new JRadioButton("十六进制");
     	
+    	jrb5 = new JRadioButton("byte");
+    	jrb6 = new JRadioButton("word");
+    	jrb7 = new JRadioButton("dword");
+    	jrb8 = new JRadioButton("qword");
+    	
     	ButtonGroup bg = new ButtonGroup();
     	bg.add(jrb1);
     	bg.add(jrb2);
     	bg.add(jrb3);
     	bg.add(jrb4);
+    	
+    	ButtonGroup bg1 = new ButtonGroup();
+    	bg1.add(jrb5);
+    	bg1.add(jrb6);
+    	bg1.add(jrb7);
+    	bg1.add(jrb8);
 
-    	jp.setLayout(new GridLayout(6,5,5,5));
+    	jp.setLayout(new GridLayout(7,6,5,5));
     	resultline.setHorizontalAlignment(JTextField.RIGHT);
     	setLayout(new GridLayout(2,1));
 
@@ -93,40 +122,80 @@ public class calculate extends JFrame {
         jp.add(t2);
         jp.add(t3);
         jp.add(bs);
+        jp.add(mod);
         jp.add(cl);
     	
     	jp.add(jrb1);
     	jp.add(jrb2);
     	jp.add(jrb3);
     	jp.add(jrb4);
-    	jp.add(mod);
+    	jp.add(sr);
+    	jp.add(da);
+    	
+    	jp.add(jrb5);
+    	jp.add(jrb6);
+    	jp.add(jrb7);
+    	jp.add(jrb8);
+    	jp.add(sl);
+    	jp.add(db);
+    	
     	jp.add(data7);
         jp.add(data8);
         jp.add(data9);
         jp.add(plus);
         jp.add(and);
+        jp.add(dc);
+        
         jp.add(data4);
         jp.add(data5);
         jp.add(data6);
         jp.add(minus);
         jp.add(or);
+        jp.add(dd);
+        
         jp.add(data1);
         jp.add(data2);
         jp.add(data3);
         jp.add(mtp);
         jp.add(xor);
+        jp.add(de);
+        
         jp.add(point);
         jp.add(data0);
         jp.add(equ);
         jp.add(dvd);
         jp.add(not);
+        jp.add(df);
         c.add(top);
         c.add(jp);
-        setSize(400,300);
+        setSize(720,480);
         setTitle("计算器");
         setVisible(true);
         setResizable(false);//不能自由改变大小
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        equ.setForeground(Color.red);
+        plus.setForeground(Color.red);
+        minus.setForeground(Color.red);
+        mtp.setForeground(Color.red);
+        dvd.setForeground(Color.red);
+        and.setForeground(Color.green);
+        or.setForeground(Color.green);
+        xor.setForeground(Color.green);
+        not.setForeground(Color.green);
+        sl.setForeground(Color.pink);
+        sr.setForeground(Color.pink);
+        mod.setForeground(Color.gray);
+        cl.setForeground(Color.yellow);
+        bs.setForeground(Color.blue);
+        
+        da.setEnabled(false);
+        db.setEnabled(false);
+        dc.setEnabled(false);
+        dd.setEnabled(false);
+        de.setEnabled(false);
+        df.setEnabled(false);
+        point.setEnabled(false);
         
         jrb1.addItemListener(new ItemListener() {
       	@Override
@@ -145,6 +214,20 @@ public class calculate extends JFrame {
         	}
             d = 2;
             dictionary = "01";
+            da.setEnabled(false);
+            db.setEnabled(false);
+            dc.setEnabled(false);
+            dd.setEnabled(false);
+            de.setEnabled(false);
+            df.setEnabled(false);
+            data2.setEnabled(false);
+            data3.setEnabled(false);
+            data4.setEnabled(false);
+            data5.setEnabled(false);
+            data6.setEnabled(false);
+            data7.setEnabled(false);
+            data8.setEnabled(false);
+            data9.setEnabled(false);
         	}
         	});
         
@@ -164,6 +247,20 @@ public class calculate extends JFrame {
         		resultline.setText("0");
          	   d = 8;
          	   dictionary = "01234567";
+         	  da.setEnabled(false);
+              db.setEnabled(false);
+              dc.setEnabled(false);
+              dd.setEnabled(false);
+              de.setEnabled(false);
+              df.setEnabled(false);
+              data2.setEnabled(true);
+              data3.setEnabled(true);
+              data4.setEnabled(true);
+              data5.setEnabled(true);
+              data6.setEnabled(true);
+              data7.setEnabled(true);
+              data8.setEnabled(false);
+              data9.setEnabled(false);
         	}
         	}
         	});
@@ -185,6 +282,20 @@ public class calculate extends JFrame {
         	}
         	   d = 10;
                dictionary = "0123456789";
+          	  da.setEnabled(false);
+              db.setEnabled(false);
+              dc.setEnabled(false);
+              dd.setEnabled(false);
+              de.setEnabled(false);
+              df.setEnabled(false);
+              data2.setEnabled(true);
+              data3.setEnabled(true);
+              data4.setEnabled(true);
+              data5.setEnabled(true);
+              data6.setEnabled(true);
+              data7.setEnabled(true);
+              data8.setEnabled(true);
+              data9.setEnabled(true);
         	}
         	});
         
@@ -205,9 +316,79 @@ public class calculate extends JFrame {
         		 resultline.setText("0");
         		   d = 16;
                    dictionary = "0123456789abcdefABCDEF";
+               	  da.setEnabled(true);
+                  db.setEnabled(true);
+                  dc.setEnabled(true);
+                  dd.setEnabled(true);
+                  de.setEnabled(true);
+                  df.setEnabled(true);
+                  data2.setEnabled(true);
+                  data3.setEnabled(true);
+                  data4.setEnabled(true);
+                  data5.setEnabled(true);
+                  data6.setEnabled(true);
+                  data7.setEnabled(true);
+                  data8.setEnabled(true);
+                  data9.setEnabled(true);
         	}
         	}
         	});
+        
+        jrb5.addItemListener(new ItemListener() {
+          	@Override
+            	public void itemStateChanged(ItemEvent e) {
+            	if (jrb5.isSelected()) {
+            		t1.setText("");
+            		t2.setText("");
+            		t3.setText("");
+            		String str = resultline.getText();
+            		 resultline.setText("0");
+                    datatype = 8;
+            	}
+            	}
+            	});
+        
+        jrb6.addItemListener(new ItemListener() {
+          	@Override
+            	public void itemStateChanged(ItemEvent e) {
+            	if (jrb6.isSelected()) {
+            		t1.setText("");
+            		t2.setText("");
+            		t3.setText("");
+            		String str = resultline.getText();
+            		 resultline.setText("0");
+                    datatype = 16;
+            	}
+            	}
+            	});
+        
+        jrb7.addItemListener(new ItemListener() {
+          	@Override
+            	public void itemStateChanged(ItemEvent e) {
+            	if (jrb7.isSelected()) {
+            		t1.setText("");
+            		t2.setText("");
+            		t3.setText("");
+            		String str = resultline.getText();
+            		 resultline.setText("0");
+                    datatype = 32;
+            	}
+            	}
+            	});
+        
+        jrb8.addItemListener(new ItemListener() {
+          	@Override
+            	public void itemStateChanged(ItemEvent e) {
+            	if (jrb8.isSelected()) {
+            		t1.setText("");
+            		t2.setText("");
+            		t3.setText("");
+            		String str = resultline.getText();
+            		 resultline.setText("0");
+                    datatype = 64;
+            	}
+            	}
+            	});
         
         data0.addActionListener(new ActionListener(){//数字0的输入
             public void actionPerformed(ActionEvent arg0){
@@ -347,6 +528,91 @@ public class calculate extends JFrame {
             }
         });
         
+        da.addActionListener(new ActionListener(){//数字9的输入
+            public void actionPerformed(ActionEvent arg0){
+                if(resultline.getText().equals("0")){
+                	resultline.setText("");
+                	resultline.setText("a");
+                	resultline.requestFocus();
+                }
+                else{
+                    String str = resultline.getText();
+                    resultline.setText(str+"a");
+                }
+            }
+        });
+        
+        db.addActionListener(new ActionListener(){//数字9的输入
+            public void actionPerformed(ActionEvent arg0){
+                if(resultline.getText().equals("0")){
+                	resultline.setText("");
+                	resultline.setText("b");
+                	resultline.requestFocus();
+                }
+                else{
+                    String str = resultline.getText();
+                    resultline.setText(str+"b");
+                }
+            }
+        });
+        
+        dc.addActionListener(new ActionListener(){//数字9的输入
+            public void actionPerformed(ActionEvent arg0){
+                if(resultline.getText().equals("0")){
+                	resultline.setText("");
+                	resultline.setText("c");
+                	resultline.requestFocus();
+                }
+                else{
+                    String str = resultline.getText();
+                    resultline.setText(str+"c");
+                }
+            }
+        });
+        
+        dd.addActionListener(new ActionListener(){//数字9的输入
+            public void actionPerformed(ActionEvent arg0){
+                if(resultline.getText().equals("0")){
+                	resultline.setText("");
+                	resultline.setText("d");
+                	resultline.requestFocus();
+                }
+                else{
+                    String str = resultline.getText();
+                    resultline.setText(str+"d");
+                }
+            }
+        });
+        
+        de.addActionListener(new ActionListener(){//数字9的输入
+            public void actionPerformed(ActionEvent arg0){
+                if(resultline.getText().equals("0")){
+                	resultline.setText("");
+                	resultline.setText("e");
+                	resultline.requestFocus();
+                }
+                else{
+                    String str = resultline.getText();
+                    resultline.setText(str+"e");
+                }
+            }
+        });
+        
+        df.addActionListener(new ActionListener(){//数字9的输入
+            public void actionPerformed(ActionEvent arg0){
+                if(resultline.getText().equals("0")){
+                	resultline.setText("");
+                	resultline.setText("f");
+                	resultline.requestFocus();
+                }
+                else{
+                    String str = resultline.getText();
+                    resultline.setText(str+"f");
+                }
+            }
+        });
+        
+        
         plus.addActionListener(new ActionListener(){//+的输入
             public void actionPerformed(ActionEvent arg0){
                 if(resultline.getText().equals("0")){
@@ -412,14 +678,90 @@ public class calculate extends JFrame {
         
         not.addActionListener(new ActionListener(){// ~的输入
             public void actionPerformed(ActionEvent arg0){
+            	getInput();
+            	s = 0;
+            	expression();
+            	stack[1] = ~stack[1];
+            	lastline.setText(buffer);
+            	String str = null;
+            	int t = 0;
+            	switch(datatype)
+            	{
+            	case 8: t = 0xff; break;
+            	case 16: t = 0xffff; break;
+            	case 32: t = 0xffffffff; break;
+            	case 64:  t = 0xffffffff; break;
+            	}
+            	if(d == 10)
+            	{
+              	  str = String.valueOf(stack[1]);
+              	  t1.setText("BIN=" + Integer.toBinaryString(stack[1]&t));
+              	  t2.setText("OCT=" + Integer.toOctalString(stack[1]&t));
+              	  t3.setText("HEX=" + Integer.toHexString(stack[1]&t));
+            	}
+            	else if(d == 2)
+            	{
+            		str = Integer.toBinaryString(stack[1]&t);
+                	  t1.setText("OCT=" + Integer.toOctalString(stack[1]&t));
+                  	  t2.setText("DEC=" + Integer.toString(stack[1]));
+                  	  t3.setText("HEX=" + Integer.toHexString(stack[1]&t));
+            	}
+            	else if(d == 16)
+            	{
+            		str = Integer.toHexString(stack[1]&t);
+            		t1.setText("BIN=" + Integer.toBinaryString(stack[1]&t));
+            		t2.setText("OCT=" + Integer.toOctalString(stack[1]&t));
+            		t3.setText("DEC=" + Integer.toString(stack[1]));
+            	}
+            	else if(d == 8)
+            	{
+            		str = Integer.toOctalString(stack[1]&t);
+            		t1.setText("BIN=" + Integer.toBinaryString(stack[1]&t));
+            		t2.setText("DEC=" + Integer.toString(stack[1]));
+                	t3.setText("HEX=" + Integer.toHexString(stack[1]&t));
+            	}
+            	resultline.setText(str);
+            }
+        });
+        
+        mod.addActionListener(new ActionListener(){// ~的输入
+            public void actionPerformed(ActionEvent arg0){
             	if(resultline.getText().equals("0")){
                 	resultline.setText("");
-                	resultline.setText("~");
+                	resultline.setText("%");
                 	resultline.requestFocus();
                 }
                 else{
                     String str = resultline.getText();
-                    resultline.setText(str+"~");
+                    resultline.setText(str+"%");
+                }
+            }
+        });
+        
+        sl.addActionListener(new ActionListener(){// ~的输入
+            public void actionPerformed(ActionEvent arg0){
+            	if(resultline.getText().equals("0")){
+                	resultline.setText("");
+                	resultline.setText("<");
+                	resultline.requestFocus();
+                }
+                else{
+                    String str = resultline.getText();
+                    resultline.setText(str+"<");
+                }
+            }
+        });
+        
+        sr.addActionListener(new ActionListener(){// ~的输入
+            public void actionPerformed(ActionEvent arg0){
+            	if(resultline.getText().equals("0")){
+                	resultline.setText("");
+                	resultline.setText(">");
+                	resultline.requestFocus();
+                }
+                else{
+                    String str = resultline.getText();
+                    resultline.setText(str+">");
                 }
             }
         });
@@ -429,36 +771,43 @@ public class calculate extends JFrame {
             	getInput();
             	s = 0;
             	expression();
-            	resultline.setText("");
             	lastline.setText(buffer);
             	String str = null;
+            	int t = 0;
+            	switch(datatype)
+            	{
+            	case 8: t = 0xff; break;
+            	case 16: t = 0xffff; break;
+            	case 32: t = 0xffffffff; break;
+            	case 64:  t = 0xffffffff; break;
+            	}
             	if(d == 10)
             	{
               	  str = String.valueOf(stack[1]);
-              	  t1.setText("BIN=" + Integer.toBinaryString(stack[1]));
-              	  t2.setText("OCT=" + Integer.toOctalString(stack[1]));
-              	  t3.setText("HEX=" + Integer.toHexString(stack[1]));
+              	  t1.setText("BIN=" + Integer.toBinaryString(stack[1]&t));
+              	  t2.setText("OCT=" + Integer.toOctalString(stack[1]&t));
+              	  t3.setText("HEX=" + Integer.toHexString(stack[1]&t));
             	}
             	else if(d == 2)
             	{
-            		str = Integer.toBinaryString(stack[1]);
-                	  t1.setText("OCT=" + Integer.toOctalString(stack[1]));
+            		str = Integer.toBinaryString(stack[1]&t);
+                	  t1.setText("OCT=" + Integer.toOctalString(stack[1]&t));
                   	  t2.setText("DEC=" + Integer.toString(stack[1]));
-                  	  t3.setText("HEX=" + Integer.toHexString(stack[1]));
+                  	  t3.setText("HEX=" + Integer.toHexString(stack[1]&t));
             	}
             	else if(d == 16)
             	{
-            		str = Integer.toHexString(stack[1]);
-            		t1.setText("BIN=" + Integer.toBinaryString(stack[1]));
-            		t2.setText("OCT=" + Integer.toOctalString(stack[1]));
+            		str = Integer.toHexString(stack[1]&t);
+            		t1.setText("BIN=" + Integer.toBinaryString(stack[1]&t));
+            		t2.setText("OCT=" + Integer.toOctalString(stack[1]&t));
             		t3.setText("DEC=" + Integer.toString(stack[1]));
             	}
             	else if(d == 8)
             	{
-            		str = Integer.toOctalString(stack[1]);
-            		t1.setText("BIN=" + Integer.toBinaryString(stack[1]));
+            		str = Integer.toOctalString(stack[1]&t);
+            		t1.setText("BIN=" + Integer.toBinaryString(stack[1]&t));
             		t2.setText("DEC=" + Integer.toString(stack[1]));
-                	t3.setText("HEX=" + Integer.toHexString(stack[1]));
+                	t3.setText("HEX=" + Integer.toHexString(stack[1]&t));
             	}
             	resultline.setText(str);
             }
@@ -500,7 +849,9 @@ public class calculate extends JFrame {
 
 	private static int d = 10;
 	
-	private static String operator = "+-*/&|~^";
+	private static int datatype = 16;
+	
+	private static String operator = "+-*/&|<>%^";
 	
 	private static String paren = "()";
 	
@@ -580,9 +931,11 @@ public class calculate extends JFrame {
 	public static void error(int i)
 	{
 		if(i == 1)
-		 System.out.println(" error1:missing \")\"\n ");
+			JOptionPane.showMessageDialog(null, "missing \")\"!!");
 		if(i == 2)
-		 System.out.println(" error1:missing \"(\"\n ");
+			JOptionPane.showMessageDialog(null, "missing \"(\"!!");
+		if(i == 3)
+			JOptionPane.showMessageDialog(null, "overflow");;
 	}
 	
 	public static void expression()
@@ -614,6 +967,17 @@ public class calculate extends JFrame {
            if(statement == 1)
            {
         	   statement = 0;
+        	   if(datatype < 32) {
+        	   if(num >= Math.pow(2 , datatype))
+        	   {
+        		   error(3);
+        		   break;
+        	   }
+        	   if(num >= Math.pow(2 , datatype-1))
+        	   {
+        		   num -= Math.pow(2 , datatype);
+        	   }
+        	   }
         	   top += 1;
         	   stack[top] = num;
         	   num = 0;
@@ -640,6 +1004,13 @@ public class calculate extends JFrame {
         		  stack[top-1] += stack[top]; 
         		  top -= 1;
         	  }
+       	   if(datatype < 32) {
+       	   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+       	   {
+       		   error(3);
+       		   break;
+       	   }
+       	   }
            }
            if(ch == '-')
            {
@@ -651,36 +1022,117 @@ public class calculate extends JFrame {
         	  }
         	  else
         		  stack[1] = -stack[top];
+        	  if(datatype < 32) {
+        		  if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+              	   {
+              		   error(3);
+              		   break;
+              	   }
+              	   }
            }
            if(ch == '*')
            {
                factor();
         	   stack[top-1] *= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
            if(ch == '/')
            {
         	   factor();
         	   stack[top-1] /= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
            if(ch == '&')
            {
         	   factor();
         	   stack[top-1] &= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
            if(ch == '|')
            {
         	   factor();
         	   stack[top-1] |= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
            if(ch == '^')
            {
         	   factor();
         	   stack[top-1] ^= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
+           }
+           if(ch == '<')
+           {
+               factor();
+        	   stack[top-1] <<= stack[top]; 
+        	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
+           }
+           if(ch == '>')
+           {
+               factor();
+        	   stack[top-1] >>= stack[top]; 
+        	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
+           }
+           if(ch == '%')
+           {
+               factor();
+        	   stack[top-1] %= stack[top]; 
+        	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
 	   }
 	}
@@ -714,6 +1166,17 @@ public class calculate extends JFrame {
            if(statement == 1)
            {
         	   statement = 0;
+        	   if(datatype < 32) {
+        	   if(num > Math.pow(2 , datatype))
+        	   {
+        		   error(3);
+        		   break;
+        	   }
+        	   if(num >= Math.pow(2 , datatype-1))
+        	   {
+        		   num -= Math.pow(2 , datatype);
+        	   }
+        	   }
         	   top += 1;
         	   stack[top] = num;
         	   num = 0;
@@ -737,30 +1200,104 @@ public class calculate extends JFrame {
         	   factor();
         	   stack[top-1] *= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
            if(ch == '/')
            {
         	   factor();
         	   stack[top-1] /= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
            if(ch == '&')
            {
         	   factor();
         	   stack[top-1] &= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
            if(ch == '|')
            {
         	   factor();
         	   stack[top-1] |= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
            if(ch == '^')
            {
         	   factor();
         	   stack[top-1] ^= stack[top]; 
         	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
+           }
+           if(ch == '<')
+           {
+               factor();
+        	   stack[top-1] <<= stack[top]; 
+        	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
+           }
+           if(ch == '>')
+           {
+               factor();
+        	   stack[top-1] >>= stack[top]; 
+        	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
+           }
+           if(ch == '%')
+           {
+               factor();
+        	   stack[top-1] %= stack[top]; 
+        	   top -= 1;
+        	   if(datatype < 32) {
+        		   if(stack[top] >= Math.pow(2 , datatype)-1 || stack[top] < -Math.pow(2 , datatype))
+               	   {
+               		   error(3);
+               		   break;
+               	   }
+               	   }
            }
 	   }
 	}
@@ -792,6 +1329,16 @@ public class calculate extends JFrame {
            if(statement == 1)
            {
         	   statement = 0;
+        	   if(datatype < 32) {
+        		   if(num >= Math.pow(2 , datatype))
+            	   {
+        			   JOptionPane.showMessageDialog(null, "overflow");
+            	   }
+            	   if(num >= Math.pow(2 , datatype-1))
+            	   {
+            		   num -= Math.pow(2 , datatype);
+            	   }
+        	   }
         	   top += 1;
         	   stack[top] = num;
         	   num = 0;
@@ -801,7 +1348,7 @@ public class calculate extends JFrame {
         	   LpNum += 1;
         	   expression();
         	   if(ch != ')')
-        		   error(1);
+        		   JOptionPane.showMessageDialog(null, "missing \")\"!!");
            }
            s-=1;
 	}
