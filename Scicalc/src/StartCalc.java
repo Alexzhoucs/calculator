@@ -1,8 +1,8 @@
 import javax.swing.*;
 
 public class StartCalc {
-    public static void main(String[] args){
-        Calculator calculator = new Calculator(400, 550);
+    public static void main(String[] C){
+        Calculator calculator = new Calculator(450, 680);
         calculator.setTitle("Calculator");
         calculator.getContentPane().setBackground(Helper.darkGrey);
         calculator.setLocationRelativeTo(null);

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 class ElementContainer extends JFrame {
@@ -59,7 +60,7 @@ class ElementContainer extends JFrame {
         this.prepareButtonByKey("delete", Helper.KEY_FONT_MD, Color.YELLOW);
         mapKeys = ButtonHolder.getMapKeysByType(this.buttonHolderMap, "single_operator");
         this.prepareButtons(mapKeys, Helper.KEY_FONT_MD, Helper.WHITE);
-        this.prepareButtonByKey("percent", Helper.KEY_FONT_MD, Helper.WHITE);
+        this.prepareButtonByKey("percent", Helper.KEY_FONT_MD, Helper.GREY);
         this.keyPad = new JPanel();
         int keyPadY = (int) (this.getHeight() * Helper.SCREEN_RATIO);
         int keyPadHeight = (int) (this.getHeight() * Helper.KEYPAD_RATIO);
@@ -89,9 +90,12 @@ class ElementContainer extends JFrame {
         this.keyPad.add(this.buttonHolderMap.get("delete")).setBounds(2*btnWidth, 0, btnWidth, Helper.BUTTON_HEIGHT);
         this.keyPad.add(this.buttonHolderMap.get("exit")).setBounds(0,0,btnWidth, Helper.BUTTON_HEIGHT);
         this.keyPad.add(this.buttonHolderMap.get("equal")).setBounds(3*btnWidth,0,btnWidth, Helper.BUTTON_HEIGHT);
-        String[] commonButtons = {"1", "2", "3", "add",  "4", "5", "6", "sub", "7", "8", "9", "mul", "point", "0","PI", "div"};
-        this.setButtonByKeyList(commonButtons,6* Helper.BUTTON_HEIGHT);
-        String[] scientificButtons = {"ln", "log","exp","pow","square", "cube", "sqrt","cbrt","sin", "cos", "tan", "percent","asin", "acos", "atan","mod",  "sinh", "cosh", "tanh","one_by_n"};
+        String[] commonButtons = {"1", "2", "3", "add",  "4", "5", "6", "sub", "7", "8", "9", "mul", "point", "0","percent", "div","e","PI",
+        		"rand","oppo"};
+        this.setButtonByKeyList(commonButtons,9* Helper.BUTTON_HEIGHT);
+        String[] scientificButtons = {"ln", "log","exp","pow","square", "cube", "sqrt","cbrt","sin", "cos", "tan","toRad","asin",
+        		"acos", "atan","toDeg",  "sinh", "cosh", "tanh","signum","max","min","round","mod","abs","one_by_n","ceil","floor","hypot"
+        		,"expm1","log1p", "scalb"};
         this.setButtonByKeyList(scientificButtons, Helper.BUTTON_HEIGHT);
     }
 

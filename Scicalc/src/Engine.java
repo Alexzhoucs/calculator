@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Date;
 
 class Engine {
     String computeSciFun(String funcName, String input) {
@@ -32,8 +33,41 @@ class Engine {
             return ""+Math.cbrt(inputValue);
         }
         else if (funcName.equalsIgnoreCase("percent")) {
-            return   "" + ((double)  inputValue/100);}
-               return "Not implemented yet";
+            return   "" + ((double)  inputValue/100);
+        }
+        else if (funcName.equalsIgnoreCase("abs")) {
+            return   "" + Math.abs(inputValue);
+        }
+        else if (funcName.equalsIgnoreCase("ceil")) {
+            return   "" + Math.ceil(inputValue);
+        }
+        else if (funcName.equalsIgnoreCase("floor")) {
+            return   "" + Math.floor(inputValue);
+        }
+        else if (funcName.equalsIgnoreCase("round")) {
+            return   "" + Math.round(inputValue);
+        }
+        else if (funcName.equalsIgnoreCase("toDeg")) {
+            return   "" + Math.toDegrees(inputValue);
+        }
+        else if (funcName.equalsIgnoreCase("toRad")) {
+            return   "" + Math.toRadians(inputValue);
+        }
+        else if (funcName.equalsIgnoreCase("expm1")) {
+            return   "" + Math.expm1(inputValue);
+        }
+        else if (funcName.equalsIgnoreCase("log1p")) {
+            return   "" + Math.log1p(inputValue);
+        }
+        else if (funcName.equalsIgnoreCase("oppo")) {
+            return   "" +( -1*(inputValue));
+        }
+        else if (funcName.equalsIgnoreCase("signum")) {
+            return   "" + Math.signum(inputValue);
+        }
+      
+        
+       return "Not implemented yet";
     }
 
     private double calculateTrigonometry(String functionName, double input) {
@@ -46,11 +80,11 @@ class Engine {
             return Math.tan(radianInput);
         }
           else if (functionName.equalsIgnoreCase("asin")) {
-            return Math.asin(radianInput);
+            return Math.asin(input);
         } else if (functionName.equalsIgnoreCase("acos")) {
-            return Math.acos(radianInput);
+            return Math.acos(input);
         } else if (functionName.equalsIgnoreCase("atan")) {
-            return Math.atan(radianInput);
+            return Math.atan(input);
         } else if (functionName.equalsIgnoreCase("sinh")) {
             return Math.sinh(radianInput);
         } else if (functionName.equalsIgnoreCase("cosh")) {
@@ -64,6 +98,7 @@ class Engine {
 
     String compute(String operand1, String operand2, String operator){
         try {
+        	int i =  Integer.parseInt(operand2);
             double parsedOperand1 = Double.parseDouble(operand1);
             double parsedOperand2 = Double.parseDouble(operand2);
             if (operator.equalsIgnoreCase("+")) {
@@ -84,6 +119,19 @@ class Engine {
             }
             else if(operator.equalsIgnoreCase("pow")){
                 return ""+Math.pow(parsedOperand1 ,parsedOperand2);
+            }
+            else if (operator.equalsIgnoreCase("max")) {
+                return "" + Math.max(parsedOperand1 ,parsedOperand2);
+            }
+            else if (operator.equalsIgnoreCase("min")) {
+                return "" + Math.min(parsedOperand1 ,parsedOperand2);
+            }
+            else if (operator.equalsIgnoreCase("hypot")) {
+                return "" + Math.hypot(parsedOperand1 ,parsedOperand2);
+            }
+            else if (operator.equalsIgnoreCase("scalb")) {
+      
+                return "" + Math.scalb(parsedOperand1 ,i);
             }
         }catch (Exception e){
             return "ERROR";

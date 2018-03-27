@@ -13,8 +13,8 @@ class Helper {
     final static Color LIGHT_BLUE = new Color(63, 132, 243);
     final static Color RED = new Color(224, 67, 67);
     final static Color WHITE = new Color(247, 247, 247);
-    final static double SCREEN_RATIO = 0.2;
-    final static double KEYPAD_RATIO = 0.75;
+    final static double SCREEN_RATIO = 0.12;
+    final static double KEYPAD_RATIO = 0.88;
     final static double INPUT_DISPLAY_RATIO = 0.5;
     final static double OUTPUT_DISPLAY_RATIO = 0.5;
 
