@@ -82,10 +82,10 @@ public class calculate extends JFrame {
     
     private void init()
     {
-    	jrb1 = new JRadioButton("二进制");
-    	jrb2 = new JRadioButton("八进制");
-    	jrb3 = new JRadioButton("十进制");
-    	jrb4 = new JRadioButton("十六进制");
+    	jrb1 = new JRadioButton("B");
+    	jrb2 = new JRadioButton("O");
+    	jrb3 = new JRadioButton("D");
+    	jrb4 = new JRadioButton("H");
     	
     	jrb5 = new JRadioButton("byte");
     	jrb6 = new JRadioButton("word");
@@ -169,7 +169,7 @@ public class calculate extends JFrame {
         c.add(top);
         c.add(jp);
         setSize(720,480);
-        setTitle("计算器");
+        setTitle("Calculator");
         setVisible(true);
         setResizable(false);//不能自由改变大小
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
